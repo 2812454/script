@@ -7,5 +7,5 @@ apt-get update -y; apt-get upgrade -y;wget https://raw.githubusercontent.com/281
 
 # ALTERAR PASSWORD ROOT
 ```
-bash <(wget -qO- raw.githubusercontent.com/2812454/script/senharoot.ssh)
+bash <(wget -qO- raw.githubusercontent.com/2812454/script/passwordroot.ssh)
 ```
