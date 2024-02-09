@@ -21,7 +21,7 @@ menu() {
         msg+="\n\n=×=×=×=×=×=×=×=×=×=×=×=×=×=\n\n"
         msg+="<b>É PROIBIDO O USO DE TORRENT, AO SER FLAGRADO USANDO TORRENT, O SEU LOGIN SERÁ CANCELADO!</b>\n\n"
         msg+="=×=×=×=×=×=×=×=×=×=×=×=×=×=\n\n"
-        msg+="<b>(ADSVPN) ❤️</b>\n\n"
+        msg+="<b>AJUDE-NOS A CONTINUAR COM ESTE PROJETO (FAZ O PIX) ❤️</b>\n\n"
         msg+="=×=×=×=×=×=×=×=×=×=×=×=×=×="
         ShellBot.sendMessage --chat_id ${message_chat_id[$id]} \
         --text "$(echo -e $msg)" \
@@ -34,7 +34,7 @@ menu() {
 criarteste() {
     [[ $(grep -wc ${callback_query_from_id} lista) != '0' ]] && {
       ShellBot.sendMessage --chat_id ${callback_query_message_chat_id} \
-        --text "JÁ CRIOU LOGIN HOJE, VOLTE EM 24HRS !"
+        --text "VC JÁ CRIOU LOGIN HOJE, VOLTE EM 24HRS !"
       return 0
     }
     usuario=$(echo teste$(( RANDOM% + 9999 + 1111 )))
@@ -57,7 +57,7 @@ rm -rf /etc/SSHPlus/userteste/$usuario.sh" > /etc/SSHPlus/userteste/$usuario.sh
     echo ${callback_query_from_id} >> lista
     # - ENVIA O SSH
     ShellBot.sendMessage --chat_id ${callback_query_message_chat_id} \
-    --text "$(echo -e "🤩 <b>LOGIN CRIADO</b> 🤩 \r\n\r\n🚻 <b>UTILIZADOR:</b> <code>$usuario</code>\r\n🔐 <b>PASSWORD:</b> <code>$senha</code>\r\n❌ <b>LIMITE:</b> 1\r\n<b>⏰ VALIDADE:</b> $dias Dias \r\n\r\n<b>BAIXE O APLICATIVO MAIS RECENTE NO NOSSO GRUPO E FIQUE POR DENTRO DAS NOVIDADES.</b>\r\n\r\n<b>ACESSE O NOSSO GRUPO</b> ADSVPN\r\n\r\n<b>ACESSE O NOSSO CANAL</b> ADSVPN")" \
+    --text "$(echo -e "🤩 <b>LOGIN CRIADO</b> 🤩 \r\n\r\n🚻 <b>USUARIO:</b> <code>$usuario</code>\r\n🔐 <b>SENHA:</b> <code>$senha</code>\r\n❌ <b>LIMITE:</b> 1\r\n<b>⏰ VALIDADE:</b> $dias Dias \r\n\r\n<b>BAIXE O APLICATIVO MAIS RECENTE NO NOSSO GRUPO E FIQUE POR DENTRO DAS NOVIDADES.</b>\r\n\r\n<b>ACESSE O NOSSO GRUPO</b> @modderajudagrupo\r\n\r\n<b>ACESSE O NOSSO CANAL</b> @modderajudacanal")" \
     --parse_mode html
     return 0
 }
@@ -77,7 +77,7 @@ enviarapp() {
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
         --text "♻️ ENVIANDO APLICATIVO, AGUARDE..."
     ShellBot.sendDocument --chat_id ${callback_query_message_chat_id} \
-        --document "@/root/adsvpn.apk" \
+        --document "@/root/donomodderajuda.apk" \
     return 0
 }
     
@@ -86,7 +86,7 @@ buymod() {
     ShellBot.answerCallbackQuery --callback_query_id ${callback_query_id[$id]} \
         --text "♻️ AGUARDE..."
     ShellBot.sendMessage --chat_id ${callback_query_message_chat_id} \
-    --text "$(echo -e "<b>COMPRE MODS DO CONECTA5G POR UM PREÇO ACESSÍVEL, MODS LINDOS E LEVES.</b>\r\n\r\n<b>ACESSE O NOSSO CANAL E ESCOLHA O MODELO</b>👉 ADSVPN\r\n\r\n<b>CHAME NO PV O CRIADOR DOS MELHORES MODS</b>👉 ADSVPN")" \
+    --text "$(echo -e "<b>COMPRE MODS DO CONECTA5G POR UM PREÇO ACESSÍVEL, MODS LINDOS E LEVES.</b>\r\n\r\n<b>ACESSE O NOSSO CANAL E ESCOLHA O MODELO</b>👉 @modderajudacanal\r\n\r\n<b>CHAME NO PV O CRIADOR DOS MELHORES MODS</b>👉 @donomodderajuda")" \
     --parse_mode html
     return 0
 }
