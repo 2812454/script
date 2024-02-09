@@ -94,7 +94,7 @@ Opcao9 () {
 
 Opcao10 () {
     clear
-    wget https://raw.githubusercontent.com/modderajuda/donomodderajuda/main/S/update
+    wget https://github.com/2812454/script/main/S/update
     chmod +x update
     bash update
 }
