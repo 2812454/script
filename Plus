@@ -186,9 +186,9 @@ echo "clear" >> /root/.bashrc
     echo -e "\033[1;37m $system                          $date"
     
     echo -e "\033[1;37m                INSTALACAO CONCLUIDA               \033[1;33m "
-    echo -e "\033[1;33mPARA INICIAR DIGITE: \033[1;36mmenu\033[1;33m E DÊ ENTER \033[0m"
+    echo -e "\033[1;33mPARA INICIAR DIGITE: \033[1;36mmenu\033[1;33m\033[0m"
     
-    echo -e "\033[1;37mMAIS INFORMACOES \033[1;31m(\033[1;36m↓\033[1;31m)↓ \033[0m"
+    echo -e "\033[1;37mMAIS INFORMACOES \033[1;31m(\033[1;36m↓\033[1;31m)\033[0m"
     echo -e "\033[1;37mADSVPN\033[0m"
     
     
