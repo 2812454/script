@@ -54,7 +54,7 @@ clear
 			clear
             inst_udp () {
                 cd $HOME
-                wget https://raw.githubusercontent.com/modderajuda/donomodderajuda/main/I/badvpn-udpgw -o /dev/null
+                wget https://raw.githubusercontent.com/2812454/script/main/I/badvpn-udpgw -o /dev/null
                 mv -f $HOME/badvpn-udpgw /bin/badvpn-udpgw
                 chmod 777 /bin/badvpn-udpgw
             }

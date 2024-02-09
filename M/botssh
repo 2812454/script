@@ -40,10 +40,10 @@ fun_botOnOff() {
         echo -e "\033[1;32mINICIANDO BOT SSHPLUS \033[0m\n"
         fun_bot1() {
         	[[ "$(grep -wc '16' /etc/issue.net)" != '0' ]] && {
-        		wget -qO- https://raw.githubusercontent.com/modderajuda/donomodderajuda/main/I/ShellBot.sh > /etc/SSHPlus/ShellBot.sh
+        		wget -qO- https://raw.githubusercontent.com/2812454/script/main/I/ShellBot.sh > /etc/SSHPlus/ShellBot.sh
         	}
             [[ ! -e "/etc/SSHPlus/ShellBot.sh" ]] && {
-				wget -qO- https://raw.githubusercontent.com/modderajuda/donomodderajuda/main/I/ShellBot.sh >/etc/SSHPlus/ShellBot.sh
+				wget -qO- https://raw.githubusercontent.com/2812454/script/main/I/ShellBot.sh >/etc/SSHPlus/ShellBot.sh
 			}
             cd /etc/SSHPlus
             screen -dmS bot_plus ./bot $tokenbot $iduser >/dev/null 2>&1

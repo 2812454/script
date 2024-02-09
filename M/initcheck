@@ -234,7 +234,7 @@ inst_depedencias() {
         sleep 0.1
     } || {
         cd $HOME
-        wget https://raw.githubusercontent.com/modderajuda/donomodderajuda/main/M/check.py -o /dev/null
+        wget https://raw.githubusercontent.com/2812454/script/main/M/check.py -o /dev/null
         mv -f $HOME/check.py /etc/SSHPlus/check.py
     }
 
@@ -242,7 +242,7 @@ inst_depedencias() {
         sleep 0.1
     } || {
         cd $HOME
-        wget https://raw.githubusercontent.com/modderajuda/donomodderajuda/main/M/4gcheck.py -o /dev/null
+        wget https://raw.githubusercontent.com/2812454/script/main/M/4gcheck.py -o /dev/null
         mv -f $HOME/4gcheck.py /etc/SSHPlus/4gcheck.py
     }
 
@@ -250,7 +250,7 @@ inst_depedencias() {
         sleep 0.1
     } || {
         cd $HOME
-        wget https://raw.githubusercontent.com/modderajuda/donomodderajuda/main/M/check -o /dev/null
+        wget https://raw.githubusercontent.com/2812454/script/main/M/check -o /dev/null
         mv -f $HOME/check /bin/check
         chmod 777 /bin/check
     }
