@@ -60,7 +60,7 @@ update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 4 >/de
 update-alternatives --set python3 /usr/bin/python3.6
 }
 echo -e "\033[1;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\E[38;5;118m        ⇱ BEM VINDO AO SCRIPT DO MODDER!! ⇲             "
+echo -e "\E[38;5;118m        ⇱ BEM VINDO AO SCRIPT DO ADSVPN!! ⇲             "
 echo -e "\033[1;37m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo ""
 echo -e "             \033[1;31mATENCAO! \033[1;37mESSE SCRIPT IRA !\033[0m"
