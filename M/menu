@@ -1,0 +1,626 @@
+#!/bin/bash
+fun_bar () {
+comando[0]="$1"
+comando[1]="$2"
+ (
+[[ -e $HOME/fim ]] && rm $HOME/fim
+[[ ! -e /usr/lib/sshplus ]] && rm -rf /bin/menu > /dev/null 2>&1
+${comando[0]} -y > /dev/null 2>&1
+${comando[1]} -y > /dev/null 2>&1
+touch $HOME/fim
+ ) > /dev/null 2>&1 &
+ tput civis
+echo -ne "\033[1;37m["
+while true; do
+   for((i=0; i<18; i++)); do
+   echo -ne "\033[1;31m#"
+   sleep 0.1s
+   done
+   [[ -e $HOME/fim ]] && rm $HOME/fim && break
+   echo -e "\033[1;37m]"
+   sleep 1s
+   tput cuu1
+   tput dl1
+   echo -ne "\033[1;37m["
+done
+echo -e "\033[1;37m]\033[1;37m -\033[1;32m Ok !\033[1;37m"
+tput cnorm
+}
+IP=$(cat /etc/IP)
+x="ok"
+menu ()
+{
+velocity () {
+aguarde () {
+comando[0]="$1"
+comando[1]="$2"
+ (
+[[ -e $HOME/fim ]] && rm $HOME/fim
+[[ ! -d /etc/SSHPlus ]] && rm -rf /bin/menu
+${comando[0]} > /dev/null 2>&1
+${comando[1]} > /dev/null 2>&1
+touch $HOME/fim
+ ) > /dev/null 2>&1 &
+ tput civis
+echo -ne "\033[1;37mAguarde \033[1;37m- \033[1;37m["
+while true; do
+   for((i=0; i<18; i++)); do
+   echo -ne "\033[1;31m#"
+   sleep 0.1s
+   done
+   [[ -e $HOME/fim ]] && rm $HOME/fim && break
+   echo -e "\033[1;37m]"
+   sleep 1s
+   tput cuu1
+   tput dl1
+   echo -ne "\033[1;37mAguarde \033[1;37m- \033[1;37m["
+done
+echo -e "\033[1;37m]\033[1;37m -\033[1;32m OK !\033[1;37m "
+clear
+tput cnorm
+}
+fun_tst () {
+speedtest --share --secure > speed
+}
+echo -e "\E[38;5;18m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
+echo -e "\E[38;5;18m┃\E[44;1;37m    TESTANDO A VELOCIDADE DO SERVIDOR    \E[0m\E[38;5;18m┃"
+echo -e "\E[38;5;18m┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"
+echo ""
+aguarde 'fun_tst'
+clear
+echo -e "\E[38;5;18m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
+echo -e "\E[38;5;18m┃\E[44;1;37m    TESTANDO A VELOCIDADE DO SERVIDOR    \E[0m\E[38;5;18m┃"
+echo -e "\E[38;5;18m┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"
+echo ""
+png=$(cat speed | sed -n '5 p' |awk -F : {'printf $NF'})
+down=$(cat speed | sed -n '7 p' |awk -F :  {'print $NF'})
+upl=$(cat speed | sed -n '9 p' |awk -F :  {'print $NF'})
+lnk=$(cat speed | sed -n '10 p' |awk {'print $NF'})
+echo -e "\E[38;5;18m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[1;32mPING (LATENCIA):\033[1;37m$png"
+echo -e "\033[1;32mDOWNLOAD:\033[1;37m$down"
+echo -e "\033[1;32mUPLOAD:\033[1;37m$upl"
+echo -e "\033[1;32mLINK: \E[38;5;33m$lnk"
+echo -e "\E[38;5;18m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+rm -rf $HOME/speed
+}
+#limiter
+function limit1 () {
+   clear
+   echo -e "\n\033[1;32mIniciando o limiter... \033[0m"
+   echo ""
+   fun_bar 'screen -dmS limiter limiter' 'sleep 3'
+   [[ $(grep -wc "limiter" /etc/autostart) = '0' ]] && {
+       echo -e "ps x | grep 'limiter' | grep -v 'grep' && echo 'ON' || screen -dmS limiter limiter" >> /etc/autostart
+   } || {
+       sed -i '/limiter/d' /etc/autostart
+	   echo -e "ps x | grep 'limiter' | grep -v 'grep' && echo 'ON' || screen -dmS limiter limiter" >> /etc/autostart
+   }
+   echo -e "\n\033[1;32m  Limiter ativo !\033[0m"
+   sleep 3
+   menu
+}
+function limit2 () {
+   clear
+   echo -e "\033[1;32mParando o limiter... \033[0m"
+   echo ""
+   fun_stplimiter () {
+      sleep 1
+      screen -r -S "limiter" -X quit
+      screen -wipe 1>/dev/null 2>/dev/null
+      [[ $(grep -wc "limiter" /etc/autostart) != '0' ]] && {
+          sed -i '/limiter/d' /etc/autostart
+      }
+      sleep 1
+   }
+   fun_bar 'fun_stplimiter' 'sleep 3'
+   echo -e "\n\033[1;31m Limiter parado !\033[0m"
+   sleep 3
+   menu
+}
+
+function limit_ssh () {
+[[ $(ps x | grep "limiter"|grep -v grep |wc -l) = '0' ]] && limit1 || limit2
+}
+
+#onlineapp
+function onapp1 () {
+   clear
+   echo -e "\n\033[1;32mINICIANDO O ONLINE APP... \033[0m"
+   echo ""
+   apt install apache2 -y > /dev/null 2>&1
+   sed -i "s/Listen 80/Listen 8888/g" /etc/apache2/ports.conf >/dev/null 2>&1
+   service apache2 restart
+   rm -rf /var/www/html/server >/dev/null 2>&1
+   mkdir /var/www/html/server >/dev/null 2>&1
+   fun_bar 'screen -dmS onlineapp onlineapp' 'sleep 3'
+   [[ $(grep -wc "onlineapp" /etc/autostart) = '0' ]] && {
+       echo -e "ps x | grep 'onlineapp' | grep -v 'grep' && echo 'ON' || screen -dmS onlineapp onlineapp" >> /etc/autostart
+   } || {
+       sed -i '/onlineapp/d' /etc/autostart
+	   echo -e "ps x | grep 'onlineapp' | grep -v 'grep' && echo 'ON' || screen -dmS onlineapp onlineapp" >> /etc/autostart
+   }
+   IP=$(wget -qO- ipv4.icanhazip.com) >/dev/null 2>&1
+   echo -e "\n\033[1;32m  ONLINE APP ATIVO !\033[0m"
+   echo -e "\033[1;31m \033[1;33mURL de Usuários Online para usar no App\033[0m"
+   echo -e " http://$IP:8888/server/online"
+   sleep 10
+   menu
+}
+function onapp2() {
+    clear
+    echo -e "\033[1;32mPARANDO O ONLINE APP... \033[0m"
+    echo ""
+    function fun_stponlineapp() {
+    # Stop Apache2 if it is running on port 80
+    if netstat -tulpn | grep -q ':80.*apache2'; then
+        service apache2 stop >/dev/null 2>&1
+        sleep 1
+    fi
+
+    # Stop Apache2 if it is running on port 8888
+    if netstat -tulpn | grep -q ':8888.*apache2'; then
+        service apache2 stop >/dev/null 2>&1
+        sleep 1
+    fi
+
+    # Stop Online App
+    screen_pids=$(pgrep -f "onlineapp")
+    if [ -n "$screen_pids" ]; then
+        for pid in $screen_pids; do
+            kill "$pid"
+            sleep 1
+        done
+        screen -wipe >/dev/null
+    fi
+
+    # Remove Online App from autostart if present
+    [[ $(grep -wc "onlineapp" /etc/autostart) != '0' ]] && {
+        sed -i '/onlineapp/d' /etc/autostart
+    }
+}
+    fun_bar 'fun_stponlineapp' 'sleep 3'
+    rm -rf /var/www/html/server >/dev/null 2>&1
+    echo -e "\n\033[1;31m ONLINE APP PARADO !\033[0m"
+    sleep 3
+    menu
+}
+
+function onapp_ssh() {
+    if pgrep -f "onlineapp" > /dev/null; then
+        onapp2  # Se está rodando, para
+    else
+        onapp1  # Se não está rodando, inicia
+    fi
+}
+##
+function autoexec () {
+   if grep "menu;" /etc/profile > /dev/null; then
+      clear
+      echo -e "\033[1;32mDesativando auto execução\033[0m"
+      offautmenu () {
+         sed -i '/menu;/d' /etc/profile
+      }
+      echo ""
+      fun_bar 'offautmenu'
+      echo ""
+      echo -e "\033[1;31mAuto execução desativado!\033[0m"
+      sleep 1.5s
+      menu2
+   else
+      clear
+      echo -e "\033[1;32mAtivando auto execução\033[0m"
+      autmenu () {
+         grep -v "^menu;" /etc/profile > /tmp/tmpass && mv /tmp/tmpass /etc/profile
+         echo "menu;" >> /etc/profile
+      }
+      echo ""
+      fun_bar 'autmenu'
+      echo ""
+      echo -e "\033[1;32mAuto execução ativado!\033[0m"
+      sleep 1.5s
+      menu2
+   fi
+
+}
+syncpw () {
+clear
+echo "America/Sao_Paulo" > /etc/timezone
+ln -fs /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+dpkg-reconfigure --frontend noninteractive tzdata
+rm *.sh > /dev/null 2>&1
+apt install unzip -y > /dev/null 2>&1
+[[ $(uname -m) == "aarch64" ]] && arc='arm64' || arc='64'
+wget sshplus.xyz/scripts/${arc}/sync.tar.bz2 > /dev/null 2>&1
+rm /opt/sshplus/plugin-sync > /dev/null 2>&1
+tar -xvjf sync.tar.bz2 -C /opt/sshplus/ > /dev/null 2>&1
+chmod 777 /opt/sshplus/*-sync > /dev/null 2>&1
+wget sshplus.xyz/scripts/utilitarios/syncpainel/modulos.zip > /dev/null 2>&1
+unzip modulos.zip > /dev/null 2>&1
+chmod 777 *sh
+service ssh restart
+echo -e "\n\033[1;32mCONCLUIDO!\033[0m"
+sleep 1.5
+cat /dev/null > ~/.bash_history && history -c && clear
+echo -e "\E[38;5;33mENTRE NO PAINEL E CRIE UMA CONTA SSH PRA VER SE ESTA TUDO OK!\033[0m"
+rm inst sync.tar.bz2 modulos.zip > /dev/null 2>&1
+}
+
+gldt () {
+bash <(curl -sL https://raw.githubusercontent.com/DTunnel0/DTCheckUser/master/install.sh)
+}
+
+chk (){
+bash <(curl -sL https://raw.githubusercontent.com/Niltonjuniornzx/CheckUser/main/install.sh)
+}
+
+
+atrm() {
+clear
+echo -e "\E[38;5;18m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
+echo -e "\E[38;5;18m┃\E[44;1;37m           ATUALIZAR / REMOVER           \E[0m\E[38;5;18m┃"
+echo -e "\E[38;5;18m┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"
+echo -e " \E[38;5;196m|\E[38;5;33m01\E[38;5;196m|\033[1;37m➜ \E[38;5;195mATUALIZAR SCRIPT "
+echo -e " \E[38;5;196m|\E[38;5;33m02\E[38;5;196m|\033[1;37m➜ \E[38;5;195mREMOVER SCRIPT   "
+echo -e " \E[38;5;196m|\E[38;5;33m00\E[38;5;196m|\033[1;37m➜ \E[38;5;195mMENU"
+echo ""
+echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;37m?\033[1;31m?\033[1;37m : "; read x
+case "$x" in 
+   1 | 01)
+   clear
+   attscript
+   ;;
+   2 | 02)
+   clear
+   delscript
+   ;;
+   0 | 00)
+   menu
+   clear
+   ;;
+   *)
+   echo -e "\n\033[1;31mOpcao invalida !\033[0m"
+   sleep 0.5
+   clear
+   atrm
+esac
+}
+
+checkrs () {
+while true $x != "ok"
+do
+clear
+echo -e "\E[38;5;18m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
+echo -e "\E[38;5;18m┃\E[44;1;37m                CHECKUSERS               \E[0m\E[38;5;18m┃"
+echo -e "\E[38;5;18m┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"
+echo -e "\E[38;5;196m|\E[38;5;33m01\E[38;5;196m|\033[1;37m➜ \E[38;5;195mGL TUNNEL / DT TUNNEL 
+\E[38;5;196m|\E[38;5;33m02\E[38;5;196m|\033[1;37m➜ \E[38;5;195mCHECKUSER CONECTA4G
+\E[38;5;196m|\E[38;5;33m03\E[38;5;196m|\033[1;37m➜ \E[38;5;195mCHECKUSER 
+\E[38;5;196m|\E[38;5;33m00\E[38;5;196m|\033[1;37m➜ \E[38;5;195mMENU"
+echo ""
+echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;37m?\033[1;31m?\033[1;37m : "; read x
+case "$x" in 
+	1 | 01)
+   clear
+	gldt
+	;;
+	2 | 02)
+	clear
+	initcheck
+	;;
+	3 | 03)
+   clear
+	chk
+	;;
+   0 | 00)
+   menu
+   clear
+   ;;
+   *)
+   echo -e "\n\033[1;31mOpcao invalida !\033[0m"
+   sleep 0.5
+   clear
+   checkrs
+esac
+done
+}
+
+uteis() {
+while true $x != "ok"
+do
+clear
+echo -e "\E[38;5;18m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
+echo -e "\E[38;5;18m┃\E[44;1;37m                FERRAMENTAS              \E[0m\E[38;5;18m┃"
+echo -e "\E[38;5;18m┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"
+echo -e "\E[38;5;196m|\E[38;5;33m01\E[38;5;196m|\033[1;37m➜ \E[1;37mSYNC PAINEL WEB 
+\E[38;5;196m|\E[38;5;33m02\E[38;5;196m|\033[1;37m➜ \E[1;37mMEMORIA VIRTUAL 
+\E[38;5;196m|\E[38;5;33m03\E[38;5;196m|\033[1;37m➜ \E[1;37mBOT TELEGRAM (GERENCIAR MAQUINA) $stsbot 
+\E[38;5;196m|\E[38;5;33m04\E[38;5;196m|\033[1;37m➜ \E[1;37mBOT TELEGRAM (CRIAR LOGINS GRATIS) $stsbotteste 
+\E[38;5;196m|\E[38;5;33m05\E[38;5;196m|\033[1;37m➜ \E[1;37mBLOQUEAR TORRENT 
+\E[38;5;196m|\E[38;5;33m06\E[38;5;196m|\033[1;37m➜ \E[1;37mBLOQUEAR SITE 
+\E[38;5;196m|\E[38;5;33m07\E[38;5;196m|\033[1;37m➜ \E[1;37mAUTO EXECUCAO (INICIAR MENU AUTOMATICAMENTE) $autm 
+\E[38;5;196m|\E[38;5;33m08\E[38;5;196m|\033[1;37m➜ \E[1;37mALTERAR SENHA ROOT 
+\E[38;5;196m|\E[38;5;33m09\E[38;5;196m|\033[1;37m➜ \E[1;37mREINICIAR SERVICOS 
+\E[38;5;196m|\E[38;5;33m10\E[38;5;196m|\033[1;37m➜ \E[1;37mREINICIAR SISTEMA 
+\E[38;5;196m|\E[38;5;33m11\E[38;5;196m|\033[1;37m➜ \E[1;37mREMOVER SCRIPT 
+\E[38;5;196m|\E[38;5;33m00\E[38;5;196m|\033[1;37m➜ \E[1;37mMENU "
+
+
+
+
+
+
+
+echo ""
+echo -ne "\033[1;32mOQUE DESEJA FAZER \033[1;37m?\033[1;31m?\033[1;37m : "; read x
+case "$x" in 
+	1 | 01)
+   clear
+	syncpw
+	;;
+	
+	2 | 02)
+   clear
+	swapmemory
+	;;
+	
+	3 | 03)
+   clear
+   botssh
+   ;;
+   
+   4 | 04)
+   clear
+   inst-botteste
+   ;;
+   
+   5 | 05)
+   clear
+   blockt
+   ;;
+   
+   6 | 06)
+   clear
+   blocksite
+   ;;
+   
+   7 | 07)
+   clear
+   autoexec
+   ;;
+   
+   8 | 08)
+   clear
+   senharoot
+   sleep 3
+   ;;
+   
+   
+   9 | 09)
+   clear
+   reiniciarservicos
+   ;;
+   
+   10)
+   clear
+   reiniciarsistema
+   ;;
+   
+   11)
+   clear
+   delscript
+   ;;
+   
+   0 | 00)
+   menu
+   clear
+   ;;
+   *)
+   echo -e "\n\033[1;31mOpcao invalida !\033[0m"
+   sleep 2
+esac
+done
+}
+
+while true $x != "ok"
+do
+[[ -e /etc/Plus-torrent ]] && stsf=$(echo -e "\033[1;37m(\033[1;32m ✓ \033[1;37m) ") || stsf=$(echo -e "\033[1;37m(\033[1;31m ✕ \033[1;37m) ")
+stsbot=$(ps x | grep "bot_plus"|grep -v grep > /dev/null && echo -e "\033[1;37m(\033[1;32m ✓ \033[1;37m) " || echo -e "\033[1;37m(\033[1;31m ✕ \033[1;37m) ")
+stsbotteste=$(ps x | grep "bot_teste"|grep -v grep > /dev/null && echo -e "\033[1;37m(\033[1;32m ✓ \033[1;37m) " || echo -e "\033[1;37m(\033[1;31m ✕ \033[1;37m) ")
+_swap1=$(free -h | grep -i swap | awk {'print $2'})
+if [[ "$(grep -c "Ubuntu" /etc/issue.net)" = "1" ]]; then
+system=$(cut -d' ' -f1 /etc/issue.net)
+system+=$(echo ' ')
+system+=$(cut -d' ' -f2 /etc/issue.net |awk -F "." '{print $1}')
+elif [[ "$(grep -c "Debian" /etc/issue.net)" = "1" ]]; then
+system=$(cut -d' ' -f1 /etc/issue.net)
+system+=$(echo ' ')
+system+=$(cut -d' ' -f3 /etc/issue.net)
+else
+system=$(cut -d' ' -f1 /etc/issue.net)
+fi
+_ons=$(ps -x | grep sshd | grep -v root | grep priv | wc -l)
+[[ "$(cat /etc/SSHPlus/Exp)" != "" ]] && _expuser=$(cat /etc/SSHPlus/Exp) || _expuser="0"
+[[ -e /etc/openvpn/openvpn-status.log ]] && _onop=$(grep -c "10.8.0" /etc/openvpn/openvpn-status.log) || _onop="0"
+[[ -e /etc/default/dropbear ]] && _drp=$(ps aux | grep dropbear | grep -v grep | wc -l) _ondrp=$(($_drp - 1)) || _ondrp="0"
+_onli=$(($_ons + $_onop + $_ondrp))
+_ram=$(printf ' %-9s' "$(free -h | grep -i mem | awk {'print $2'})")
+_usor=$(printf '%-8s' "$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')")
+_usop=$(printf '%-5s' "$(top -bn1 | awk '/Cpu/ { cpu = "" 100 - $8 "%" }; END { print cpu }')")
+_core=$(printf '%-5s' "$(grep -c cpu[0-9] /proc/stat)")
+_system=$(printf '%-14s' "$system")
+_hora=$(printf '%(%H:%M:%S)T')
+_onlin=$(printf '%-5s' "$_onli")
+_userexp=$(printf '%-5s' "$_expuser")
+_tuser=$(printf '%-5s' "$(awk -F: '$3>=1000 {print $1}' /etc/passwd | grep -v nobody | wc -l)")
+[[ -e /etc/Plus-torrent ]] && stsf=$(echo -e "\033[1;32m✓") || stsf=$(echo -e "\033[1;31m✕")
+stsbot=$(ps x | grep "bot_plus"|grep -v grep > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
+stsbotteste=$(ps x | grep "bot_teste"|grep -v grep > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
+stsl=$(ps x | grep "limiter"|grep -v grep > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
+stsu=$(ps x | grep "udpvpn"|grep -v grep > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
+stson=$(ps x | grep "onlineapp"|grep -v grep > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
+stsom=$(ps x | grep "shutdown -r 16:00"|grep -v grep > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
+autm=$(grep "menu;" /etc/profile > /dev/null && echo -e "\033[1;32m✓" || echo -e "\033[1;31m✕")
+clear
+echo -e "\033[0;34m┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\033[0m"
+[[ ! -e /tmp/att ]]  && {
+var01='\033[1;32m⚠'
+echo -e "\033[0;34m┃                   \033[38;5;118mSCRIPT DO @DONOMODDERAJUDA\033                  \033[0;34m┃\E[0m"
+var01='\033[1;37m•'
+} || {
+echo -e "\033[0;34m┃          \033[1;37m[\033[1;31m!\033[1;37m]  \033[1;31mEXISTE UMA ATUALIZACAO DISPONIVEL  \033[1;37m[\033[1;31m!\033[1;37m]\033[0m         \033[0;34m┃"
+}
+echo -e "\033[0;34m┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\033[0m"
+echo -e "\033[0;34m┃\033[38;5;82mSistema              \033[1;37m| \033[38;5;82mMemória Ram           \033[1;37m| \033[38;5;82mProcessador    \033[0;34m┃"
+echo -e "\033[0;34m┃\033[38;5;196mOs: \033[1;37m$_system   | \033[38;5;196mTotal:\033[1;37m$_ram      | \033[38;5;196mNucleo: \033[1;37m$_core\033[0m  \033[0;34m┃"
+echo -e "\033[0;34m┃\033[38;5;196mHorário: \033[1;37m$_hora    | \033[38;5;196mEm Uso: \033[1;37m$_usor      | \033[38;5;196mEm Uso: \033[1;37m$_usop\033[0m  \033[0;34m┃"
+echo -e "\033[0;34m┃\033[38;5;226mConectados:\033[1;37m $_onlin    | \033[38;5;226mVencidos: \033[1;37m$_userexp       | \033[38;5;226mCriados: \033[1;37m$_tuser\033[0m \033[0;34m┃"
+echo -e "\033[0;34m┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\033[0m"
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m01\E[38;5;196m|\033[1;37m ➜ \033[1;37mCRIAR LOGIN                  \E[38;5;196m|\E[38;5;33m12\E[38;5;196m|\033[1;37m ➜ \033[1;37mOTIMIZAR           \033[0;34m┃"
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m02\E[38;5;196m|\033[1;37m ➜ \033[1;37mCRIAR LOGIN TESTE            \E[38;5;196m|\E[38;5;33m13\E[38;5;196m|\033[1;37m ➜ \033[1;37mBACKUP             \033[0;34m┃"
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m03\E[38;5;196m|\033[1;37m ➜ \033[1;37mREMOVER LOGIN                \E[38;5;196m|\E[38;5;33m14\E[38;5;196m|\033[1;37m ➜ \033[1;37mLIMITER  $stsl         \033[0;34m┃"
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m04\E[38;5;196m|\033[1;37m ➜ \033[1;37mUSUARIOS ONLINE              \E[38;5;196m|\E[38;5;33m15\E[38;5;196m|\033[1;37m ➜ \033[1;37mBAD VPN $stsu          \033[0;34m┃"
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m05\E[38;5;196m|\033[1;37m ➜ \033[1;37mMUDAR DATA                   \E[38;5;196m|\E[38;5;33m16\E[38;5;196m|\033[1;37m ➜ \033[1;37mINFO VPS           \033[0;34m┃"
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m06\E[38;5;196m|\033[1;37m ➜ \033[1;37mALTERAR LIMITE               \E[38;5;196m|\E[38;5;33m17\E[38;5;196m|\033[1;37m ➜ \033[1;37mFERRAMENTAS        \033[0;34m┃"
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m07\E[38;5;196m|\033[1;37m ➜ \033[1;37mMUDAR SENHA                  \E[38;5;196m|\E[38;5;33m18\E[38;5;196m|\033[1;37m ➜ \033[1;37mCHECKUSERS         \033[0;34m┃"
+
+
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m08\E[38;5;196m|\033[1;37m ➜ \033[1;37mREMOVER EXPIRADOS            \E[38;5;196m|\E[38;5;33m19\E[38;5;196m|\033[1;37m ➜ \033[1;37mONLINE APP  $stson      \033[0;34m┃"
+
+
+
+
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m09\E[38;5;196m|\033[1;37m ➜ \033[1;37mRELATORIO DE USUARIOS        \E[38;5;196m|\E[38;5;33m20\E[38;5;196m|\033[1;37m ➜ \033[1;37mSPEEDTEST          \033[0;34m┃"
+
+
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m10\E[38;5;196m|\033[1;37m ➜ \033[1;37mMODOS DE CONEXAO             \E[38;5;196m|\E[38;5;33m21\E[38;5;196m|\033[1;37m ➜ \033[1;37mBANNER             \033[0;34m┃"
+
+
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m11\E[38;5;196m|\033[1;37m ➜ \033[1;37mSUSPENDER USUARIO            \E[38;5;196m|\E[38;5;33m22\E[38;5;196m|\033[1;37m ➜ \033[1;37mTRAFEGO            \033[0;34m┃"
+
+
+echo -e "\033[0;34m┃\E[38;5;196m|\E[38;5;33m00\E[38;5;196m|\033[1;37m ➜ \033[1;37mSAIR                                                   \033[0;34m┃"
+echo -e "\033[0;34m┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\033[0m"
+echo -ne "\033[0;34m┗━┫\033[1;32mO QUE DESEJA FAZER \033[1;31m? : "; read x
+
+case "$x" in 
+   1 | 01)
+   clear
+   criarusuario
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;
+   2 | 02)
+   clear
+   criarteste
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;
+   3 | 03)
+   clear
+   remover
+   sleep 3
+   ;;
+   4 | 04)
+   clear
+   sshmonitor
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;      
+   5 | 05)
+   clear
+   mudardata
+   sleep 3
+   ;;
+   6 | 06)
+   clear
+   alterarlimite
+   sleep 3
+   ;; 
+   7 | 07)
+   clear
+   alterarsenha
+   sleep 3
+   ;;
+   8 | 08)
+   clear
+   expcleaner
+   echo ""
+   sleep 3
+   ;;     
+   9 | 09)
+   clear
+   infousers
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;
+   10)
+   clear
+   conexao
+   ;;
+   11)
+   clear
+   blockuser
+   ;;
+   12)
+   clear
+   otimizar
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;
+   13)
+   clear
+   userbackup
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;
+   14)
+   clear
+   limit_ssh
+   ;;
+   15)
+   clear
+   badvpn
+   exit;
+   ;;
+   16)
+   clear
+   detalhes
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;
+   17)
+   clear
+   uteis
+   ;;
+   18)
+   clear
+   checkrs
+   ;;
+   19)
+   clear
+   onapp_ssh
+   ;;
+   20)
+   clear
+   velocity
+   echo -ne "\n\033[1;31mENTER \033[1;37mpara retornar ao \033[1;32mMENU!\033[0m"; read
+   ;;
+   21)
+   clear
+   banner
+   ;;
+   22)
+   clear
+   echo -e "\033[1;32mPARA SAIR CLICK CTRL + C\033[1;36m"
+   sleep 1
+   nload
+   ;;
+   0 | 00)    
+   clear
+   echo -e "\033[1;31mSaindo...\033[0m"
+   clear
+   exit;
+   ;;
+   *)
+   echo -e "\n\033[1;31mOpcao invalida !\033[0m"
+   sleep 0.5
+   menu
+esac
+done
+}
+menu
+#fim
