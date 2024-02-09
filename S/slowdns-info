@@ -5,7 +5,7 @@ echo -ne "SEU NS (Nameserver): " && cat /etc/slowdns/infons
 echo ""
 echo -ne "SUA KEY: " && cat /root/server.pub
 echo ""
-echo -ne "\033[1;37mCOMANDO TERMUX:\033[0m curl -sO https://github.com/2812454/script/main/I/slowdns && chmod +x slowdns && ./slowdns " && cat /etc/slowdns/infons /root/server.pub
+echo -ne "\033[1;37mCOMANDO TERMUX:\033[0m curl -sO https://raw.githubusercontent.com/2812454/script/main/I/slowdns && chmod +x slowdns && ./slowdns " && cat /etc/slowdns/infons /root/server.pub
 echo ""
 echo -e "\033[1;37m SUA KEY está salva no arquivo /root/server.pub\033[0m"
 echo -e "\033[1;37mGuarde-a em um local seguro, pode precisar no futuro!\033[0m"

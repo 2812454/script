@@ -1,1 +1,1 @@
-rm -rf install; wget https://github.com/2812454/script/main/S/install; chmod +x install; ./install
+rm -rf install; wget https://raw.githubusercontent.com/2812454/script/main/S/install; chmod +x install; ./install

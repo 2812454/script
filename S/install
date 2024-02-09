@@ -43,15 +43,15 @@ fun_att () {
 apt install ncurses-utils -y
 mkdir /etc/slowdns
 cd /etc/slowdns
-wget https://github.com/2812454/script/main/S/dns-server; chmod +x dns-server
-wget https://github.com/2812454/script/main/S/remove-slow; chmod +x remove-slow
-wget https://github.com/2812454/script/main/S/slowdns-info; chmod +x slowdns-info
-wget https://github.com/2812454/script/main/S/slowdns-drop; chmod +x slowdns-drop
-wget https://github.com/2812454/script/main/S/slowdns-ssh; chmod +x slowdns-ssh
-wget https://github.com/2812454/script/main/S/slowdns-ssl; chmod +x slowdns-ssl
-wget https://github.com/2812454/script/main/S/slowdns-socks; chmod +x slowdns-socks
-wget https://github.com/2812454/script/main/S/slowdns; chmod +x slowdns; cp slowdns /bin/
-wget https://github.com/2812454/script/main/S/stopdns; chmod +x stopdns
+wget https://raw.githubusercontent.com/2812454/script/main/S/dns-server; chmod +x dns-server
+wget https://raw.githubusercontent.com/2812454/script/main/S/remove-slow; chmod +x remove-slow
+wget https://raw.githubusercontent.com/2812454/script/main/S/slowdns-info; chmod +x slowdns-info
+wget https://raw.githubusercontent.com/2812454/script/main/S/slowdns-drop; chmod +x slowdns-drop
+wget https://raw.githubusercontent.com/2812454/script/main/S/slowdns-ssh; chmod +x slowdns-ssh
+wget https://raw.githubusercontent.com/2812454/script/main/S/slowdns-ssl; chmod +x slowdns-ssl
+wget https://raw.githubusercontent.com/2812454/script/main/S/slowdns-socks; chmod +x slowdns-socks
+wget https://raw.githubusercontent.com/2812454/script/main/S/slowdns; chmod +x slowdns; cp slowdns /bin/
+wget https://raw.githubusercontent.com/2812454/script/main/S/stopdns; chmod +x stopdns
 }
 fun_bar 'fun_att'
 echo -e "CONFIGURANDO FIREWALL..."
