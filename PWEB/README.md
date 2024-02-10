@@ -5,7 +5,7 @@
 
 ⬇️ Instalador
 ```
-bash <(wget -qO- https://raw.githubusercontent.com/ScottBrabo/aNoobisPweb/main/raw/painel/install/ubuinst.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/2812454/main/PWEB/install/ubuinst.sh)
 ```
 
 🔑 Key Ilimitada
@@ -15,7 +15,7 @@ adsvpn
 
 🔄 Sincronizador
 ```
-bash <(wget -qO- https://raw.githubusercontent.com/ScottBrabo/aNoobisPweb/main/raw/painel/sync/sincpainel.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/2812454/main/PWEB/sync/sincpainel.sh)
 ```
 
 🔥Use e abuse 🍷
