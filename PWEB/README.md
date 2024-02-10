@@ -1,6 +1,6 @@
 🔰GESTOR-SSH🔰
 
-🔹️PAINELWEB
+🔹️PAINEL-WEB
 
 
 ⬇️ Instalador
