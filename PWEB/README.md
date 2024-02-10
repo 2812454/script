@@ -1,7 +1,6 @@
 🔰GESTOR-SSH🔰
 
-🔹️PAINELWEB AlanSSH Free!
-      feat: @scottssh
+🔹️PAINELWEB
 
 
 ⬇️ Instalador
@@ -11,7 +10,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/ScottBrabo/aNoobisPweb/main/r
 
 🔑 Key Ilimitada
 ```
-alanssh
+adsvpn
 ```
 
 🔄 Sincronizador
