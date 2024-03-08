@@ -175,7 +175,7 @@ cd $HOME
 echo "clear" >> /root/.bashrc
     echo 'DATE=$(date +"%d-%m-%y")' >>/root/.bashrc
     echo 'TIME=$(date +"%T")' >>/root/.bashrc
-    echo 'figlet -k MODDER | lolcat' >>/root/.bashrc
+    echo 'figlet -k ADSVPN | lolcat' >>/root/.bashrc
     echo 'echo -e "\033[1;32m NOME DO SERVIDOR : \033[38;5;196m$HOSTNAME"' >>/root/.bashrc
     echo 'echo -e "\033[1;32m SERVIDOR LIGADO À : \033[1;31m$(uptime -p)"' >>/root/.bashrc
     echo 'echo -e "\033[1;32m DATA : \033[1;31m$DATE"' >>/root/.bashrc
