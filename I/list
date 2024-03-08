@@ -31,7 +31,7 @@ echo "PasswordAuthentication yes" >>/etc/ssh/sshd_config
 _dir1='/bin'
 _dir2='/etc/SSHPlus'
 rm $_dir2/ShellBot.sh $_dir2/cabecalho $_dir2/open.py $_dir2/proxy.py $_dir2/wsproxy.py >/dev/null 2>&1
-_mdls=("alterarsenha" "criarusuario" "expcleaner" "mudardata" "remover" "criarteste" "verifbot" "droplimiter" "versao" "attscript" "alterarlimite" "ajuda" "sshmonitor" "badvpn" "userbackup" "instsqd" "blockt" "otimizar" "menu" "speedtest" "banner" "senharoot" "reiniciarservicos" "reiniciarsistema" "attscript" "conexao" "delscript" "detalhes" "botssh" "infousers" "onlineapp" "inst-botteste" "verifatt" "limiter" "uexpired" "cabecalho" "bot" "open.py" "proxy.py" "wsproxy.py" "security" "swapmemory" "websocket.sh" "blockuser" "multi" "tcptweaker.sh" "blockuser" "trojan-go" "blocksite" "initcheck" "instcheck" "slowdns")
+_mdls=("alterarsenha" "criarusuario" "sshv2ray" "expcleaner" "mudardata" "remover" "criarteste" "verifbot" "droplimiter" "versao" "attscript" "alterarlimite" "ajuda" "sshmonitor" "badvpn" "userbackup" "instsqd" "blockt" "otimizar" "menu" "speedtest" "banner" "senharoot" "reiniciarservicos" "reiniciarsistema" "attscript" "conexao" "delscript" "detalhes" "botssh" "infousers" "onlineapp" "inst-botteste" "verifatt" "limiter" "uexpired" "cabecalho" "bot" "open.py" "proxy.py" "wsproxy.py" "security" "swapmemory" "websocket.sh" "blockuser" "multi" "tcptweaker.sh" "blockuser" "trojan-go" "blocksite" "initcheck" "instcheck" "slowdns")
 for _arq in ${_mdls[@]}; do
 	[[ -e $_dir1/$_arq ]] && rm $_dir1/$_arq >/dev/null 2>&1
 	wget -c -P $_dir1 https://raw.githubusercontent.com/2812454/script/main/M/$_arq
